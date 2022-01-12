@@ -57,45 +57,88 @@ public class UserDao {
 			System.out.println("error:" + e);
 		}
 	}
-	
+
 	// 저장 메소드(회원가입)
 	public int insert(UserVo userVo) {
-		
+
 		int count = 0;
+
+		getConnection();
+
+		try {
+			// 3. SQL문 준비 / 바인딩 / 실행
+			// 문자열
+			String query = "";
+			query += " insert into users ";
+			query += " values(seq_users_no.nextval, ?, ?, ?, ?) ";
+
+			// 쿼리문
+			pstmt = conn.prepareStatement(query);
+
+			// 바인딩
+			pstmt.setString(1, userVo.getId());
+			pstmt.setString(2, userVo.getPassword());
+			pstmt.setString(3, userVo.getName());
+			pstmt.setString(4, userVo.getGender());
+
+			// 실행
+			count = pstmt.executeUpdate();
+
+			// 4.결과처리
+			System.out.println(count + "건이 등록되었습니다(UserDao)");
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+
+		close();
+
+		return count;
+	}
+
+	// 회원정보1명 가져오기(로그인용)
+	public UserVo getUser(String id, String password) {
+
+		UserVo userVo = null ;
 		
 		getConnection();
 		
 		try {
 			// 3. SQL문 준비 / 바인딩 / 실행
-			//문자열
-			String query ="";
-			query +=" insert into users ";
-			query +=" values(seq_users_no.nextval, ?, ?, ?, ?) ";
-			
-			//쿼리문
+			// 문자열
+			String query = "";
+			query += " select  no, ";
+			query += "         name ";
+			query += " from users ";
+			query += " where id = ? ";
+			query += " and password = ? ";
+
+			// 쿼리문
 			pstmt = conn.prepareStatement(query);
+
+			// 바인딩
+			pstmt.setString(1, id);
+			pstmt.setString(2, password);
 			
-			//바인딩
-			pstmt.setString(1, userVo.getId());
-			pstmt.setString(2, userVo.getPassword());
-			pstmt.setString(3, userVo.getName());
-			pstmt.setString(4, userVo.getGender());
-			
-			//실행
-			count = pstmt.executeUpdate();
+			// 실행
+			rs = pstmt.executeQuery();
 			
 			// 4.결과처리
-			System.out.println(count + "건이 등록되었습니다(UserDao)");
+			while(rs.next()) {
+				int no = rs.getInt("no");
+				String name = rs.getString("name");	
+				
+				userVo = new UserVo();
+				userVo.setNo(no);
+				userVo.setName(name);
+			}
 			
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
-		} 
-		
+		}
+
 		close();
-		
-		return count;
+		return userVo;
 	}
-	
-	
 
 }

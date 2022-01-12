@@ -13,7 +13,6 @@ public class UserVo {
 	public UserVo() {}
 
 	public UserVo(String id, String password, String name, String gender) {
-		super();
 		this.id = id;
 		this.password = password;
 		this.name = name;
