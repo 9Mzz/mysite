@@ -1,9 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%
-	String result = request.getParameter("result");
+String result = request.getParameter("result");
 %>
+
+
+
 
 <!DOCTYPE html>
 <html>
@@ -17,35 +19,9 @@
 <body>
 	<div id="wrap">
 
-		<div id="header" class="clearfix">
-			<h1>
-				<a href="">MySite</a>
-			</h1>
+		<!-- header + nav -->
+		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
-			<!-- 
-			<ul>
-				<li>황일영 님 안녕하세요^^</li>
-				<li><a href="" class="btn_s">로그아웃</a></li>
-				<li><a href="" class="btn_s">회원정보수정</a></li>
-			</ul>
-			-->	
-			<ul>
-				<li><a href="" class="btn_s">로그인</a></li>
-				<li><a href="" class="btn_s">회원가입</a></li>
-			</ul>
-			
-		</div>
-		<!-- //header -->
-
-		<div id="nav">
-			<ul class="clearfix">
-				<li><a href="">입사지원서</a></li>
-				<li><a href="">게시판</a></li>
-				<li><a href="">갤러리</a></li>
-				<li><a href="">방명록</a></li>
-			</ul>
-		</div>
-		<!-- //nav -->
 
 		<div id="container" class="clearfix">
 			<div id="aside">
@@ -59,7 +35,7 @@
 			<!-- //aside -->
 
 			<div id="content">
-			
+
 				<div id="content-head">
 					<h3>로그인</h3>
 					<div id="location">
@@ -71,38 +47,41 @@
 					</div>
 					<div class="clear"></div>
 				</div>
-				 <!-- //content-head -->
-	
+				<!-- //content-head -->
+
 				<div id="user">
 					<div id="loginForm">
 						<form action="/mysite/user" method="get">
-	
+
 							<!-- 아이디 -->
 							<div class="form-group">
-								<label class="form-text" for="input-uid">아이디</label> 
-								<input type="text" id="input-uid" name="id" value="" placeholder="아이디를 입력하세요">
+								<label class="form-text" for="input-uid">아이디</label> <input type="text" id="input-uid" name="id" value="" placeholder="아이디를 입력하세요">
 							</div>
-	
+
 							<!-- 비밀번호 -->
 							<div class="form-group">
-								<label class="form-text" for="input-pass">비밀번호</label> 
-								<input type="text" id="input-pass" name="password" value="" placeholder="비밀번호를 입력하세요"	>
+								<label class="form-text" for="input-pass">비밀번호</label> <input type="text" id="input-pass" name="password" value="" placeholder="비밀번호를 입력하세요">
 							</div>
-	
-	
-							<%if("fail".equals(result)) { %>
-								<p>로그인에 실패했습니다. 다시로그인 해주세요</p>
-							<%}%>
-							
+
+
+							<%
+							if ("fail".equals(result)) {
+							%>
+							<p>로그인에 실패했습니다. 다시로그인 해주세요</p>
+							<%
+							}
+							%>
+
+
 							<!-- 버튼영역 -->
 							<div class="button-area">
 								<button type="submit" id="btn-submit">로그인</button>
 							</div>
-							
-							
+
+
 							<input type="text" name="action" value="login">
-							
-							
+
+
 						</form>
 					</div>
 					<!-- //loginForm -->
@@ -110,15 +89,13 @@
 				<!-- //user -->
 			</div>
 			<!-- //content  -->
-			
+
 		</div>
 		<!-- //container  -->
 
-		<div id="footer">
-			Copyright ⓒ 2020 황일영. All right reserved
-		</div>
-		<!-- //footer -->
-
+		<!-- footer -->
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
+	
 	</div>
 	<!-- //wrap -->
 
