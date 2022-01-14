@@ -99,10 +99,10 @@ public class UserDao {
 	// 회원정보1명 가져오기(로그인용)
 	public UserVo getUser(String id, String password) {
 
-		UserVo userVo = null ;
-		
+		UserVo userVo = null;
+
 		getConnection();
-		
+
 		try {
 			// 3. SQL문 준비 / 바인딩 / 실행
 			// 문자열
@@ -119,26 +119,101 @@ public class UserDao {
 			// 바인딩
 			pstmt.setString(1, id);
 			pstmt.setString(2, password);
-			
+
 			// 실행
 			rs = pstmt.executeQuery();
-			
+
 			// 4.결과처리
-			while(rs.next()) {
+			while (rs.next()) {
 				int no = rs.getInt("no");
-				String name = rs.getString("name");	
-				
+				String name = rs.getString("name");
+
 				userVo = new UserVo();
 				userVo.setNo(no);
 				userVo.setName(name);
 			}
-			
+
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		}
 
 		close();
 		return userVo;
+	}
+
+	// 사용자 정보 가져오기 메소드 (회원정보 수정폼 사용), 메소드 오버로딩
+	public UserVo getUser(int no) {
+		UserVo userVo = null;
+
+		getConnection();
+
+		try {
+
+			// 3. SQL문 준비 / 바인딩 / 실행
+			String query = ""; // 쿼리문 문자열만들기, ? 주의
+			query += " select no, id, password, name, gender ";
+			query += " from users ";
+			query += " where no = ? ";
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, no);
+
+			rs = pstmt.executeQuery();
+
+			// 4.결과처리
+			while (rs.next()) {
+				int rNo = rs.getInt("no");
+				String id = rs.getString("id");
+				String password = rs.getString("password");
+				String name = rs.getString("name");
+				String gender = rs.getNString("gender");
+
+				userVo = new UserVo(rNo, id, password, name, gender);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+
+		close();
+
+		return userVo;
+	}
+
+	// 사용자 정보 수정 메소드
+	public int update(UserVo vo) {
+		int count = 0;
+		getConnection();
+
+		try {
+			// 3. SQL문 준비 / 바인딩 / 실행
+			String query = ""; // 쿼리문 문자열만들기, ? 주의
+
+			query += " update users ";
+			query += " set name = ?, ";
+			query += "     password = ?, ";
+			query += "     gender = ? ";
+			query += " where no = ? ";
+
+			pstmt = conn.prepareStatement(query);
+
+			pstmt.setString(1, vo.getName());
+			pstmt.setString(2, vo.getPassword());
+			pstmt.setString(3, vo.getGender());
+			pstmt.setInt(4, vo.getNo());
+
+			count = pstmt.executeUpdate();
+
+			// 4.결과처리
+			System.out.println("userDao.update(): " + count + "건 회원정보 수정");
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+
+		close();
+
+		return count;
 	}
 
 }

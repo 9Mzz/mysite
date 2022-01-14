@@ -1,10 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
-<%
-String result = request.getParameter("result");
-%>
-
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
 <!DOCTYPE html>
@@ -20,7 +15,7 @@ String result = request.getParameter("result");
 	<div id="wrap">
 
 		<!-- header + nav -->
-		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
 
 
 		<div id="container" class="clearfix">
@@ -64,14 +59,9 @@ String result = request.getParameter("result");
 							</div>
 
 
-							<%
-							if ("fail".equals(result)) {
-							%>
-							<p>로그인에 실패했습니다. 다시로그인 해주세요</p>
-							<%
-							}
-							%>
-
+							<c:if test="${param.result eq 'fail' }">
+								<p>로그인에 실패했습니다. 다시로그인 해주세요</p>
+							</c:if>
 
 							<!-- 버튼영역 -->
 							<div class="button-area">
@@ -94,8 +84,9 @@ String result = request.getParameter("result");
 		<!-- //container  -->
 
 		<!-- footer -->
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
-	
+		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
+		
+		
 	</div>
 	<!-- //wrap -->
 

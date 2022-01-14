@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html>
@@ -14,7 +15,7 @@
 	<div id="wrap">
 
 		<!-- header + nav -->
-		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
 
 
 		<div id="container" class="clearfix">
@@ -47,7 +48,7 @@
 					<div id="joinOK">
 
 						<p class="text-large bold">
-							회원가입을 축하합니다.<br> <br> <a href="">[로그인하기]</a>
+							회원가입을 축하합니다.<br> <br> <a href="/mysite/user?action=loginForm">[로그인하기]</a>
 						</p>
 
 					</div>
@@ -61,7 +62,7 @@
 
 
 		<!-- footer -->
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
+		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 
 
 	</div>
